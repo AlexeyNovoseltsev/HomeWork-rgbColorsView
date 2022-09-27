@@ -27,45 +27,65 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         colorView.layer.cornerRadius = 10
-        
-        setupLabel()
-        
+        setColor()
+        setValue()
     }
     
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         setDynamicColorLabel()
     }
     
     //MARK: - IBActions
-    @IBAction func sliderAction() {
+    @IBAction func sliderAction(_ sender: UISlider) {
+        setColor()
+        switch sender {
+        case redSlider:
+            redLabel.text = string(from: sender)
+        case greenLabel:
+            greenLabel.text = string(from: sender)
+        default:
+            blueLabel.text = string(from: sender)
+        }
+    }
+  
+    //MARK: - Private Methods
+    private func setColor() {
         colorView.backgroundColor = UIColor(
             red: CGFloat(redSlider.value),
             green: CGFloat(greenSlider.value),
             blue: CGFloat(blueSlider.value),
             alpha: 1
         )
-        
-        redLabel.text = String(format: "%.2f", redSlider.value)
-        greenLabel.text = String(format: "%.2f", greenSlider.value)
-        blueLabel.text = String(format: "%.2f", blueSlider.value)
+    }
+    private func setValue() {
+        redLabel.text = string(from: redSlider)
+        greenLabel.text = string(from: greenSlider)
+        blueLabel.text = string(from: blueSlider)
     }
     
-    //MARK: - Private Methods
-    private func setupLabel() {
-        redLabel.text = redSlider.value.formatted()
-        greenLabel.text = greenSlider.value.formatted()
-        blueLabel.text = blueSlider.value.formatted()
+    private func string(from slider: UISlider) -> String {
+        String(format: "%.2f", slider.value)
     }
     
     private func setDynamicColorLabel() {
         redDynemicColorLabel.textColor = UIColor(
-            red: CGFloat (redSlider.value), green: 0, blue: 0, alpha: 1
+            red: CGFloat(redSlider.value),
+            green: 0,
+            blue: 0,
+            alpha: 1
         )
         greenDynemicColorLabel.textColor = UIColor(
-            red: 0, green: CGFloat (greenSlider.value), blue: 0, alpha: 1
+            red: 0,
+            green: CGFloat(greenSlider.value),
+            blue: 0,
+            alpha: 1
         )
         blueDynemicColorLabel.textColor = UIColor(
-            red: 0, green: 0, blue: CGFloat(blueSlider.value), alpha: 1
+            red: 0,
+            green: 0,
+            blue: CGFloat(blueSlider.value),
+            alpha: 1
         )
     }
 }
